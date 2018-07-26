@@ -1,5 +1,14 @@
-webapp:
-  image: sdj-utils:latest
-  restart: always
-  ports:
-    - "9000:9000"
+web:
+    image: nginx:1.13-alpine
+    ports:
+        - "8080:80"
+    volumes:
+        - ./src:/src
+        - ./src:/usr/share/nginx/html/
+        - ./site.conf:/etc/nginx/conf.d/site.conf
+    links:
+        - php
+php:
+    image: php:7-fpm
+    volumes:
+        - ./src:/src
